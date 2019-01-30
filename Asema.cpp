@@ -36,7 +36,7 @@ Asema::Asema()
 
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			_lauta[i][j] = nullptr;
+			_lauta[i][j] = NULL;
 		}
 	}
 
@@ -45,8 +45,8 @@ Asema::Asema()
 	_lauta[0][0] = MT;
 	_lauta[0][1] = ML;
 	_lauta[0][2] = MR;
-	_lauta[0][3] = MK;
-	_lauta[0][4] = MD;
+	_lauta[0][3] = MD;
+	_lauta[0][4] = MK;
 	_lauta[0][5] = VL;
 	_lauta[0][6] = MR;
 	_lauta[0][7] = MT;
@@ -61,20 +61,161 @@ Asema::Asema()
 	_lauta[7][0] = VT;
 	_lauta[7][1] = VR;
 	_lauta[7][2] = VL;
-	_lauta[7][3] = VK;
-	_lauta[7][4] = VD;
+	_lauta[7][3] = VD;
+	_lauta[7][4] = VK;
 	_lauta[7][5] = VL;
 	_lauta[7][6] = VR;
 	_lauta[7][7] = VT;
 
-	
+
 	// Valkoinen puoli 2 rivi
 	for (int i = 0; i < 8; i++) {
 		_lauta[6][i] = VS;
 
 	}
-	
+}
+
+void Asema::paivitaAsema(Siirto* siirto)
+{
+	if (siirto->onkoLyhytLinna() == true)
+	{
+		if (_siirtoVuoro == 1)
+		{
+			_lauta[0][6] = _lauta[0][4];
+			_lauta[0][5] = _lauta[0][7];
+			_lauta[0][4] = nullptr;
+			_lauta[0][7] = nullptr;
+			if (_siirtoVuoro == 0) _siirtoVuoro = 1;
+			else _siirtoVuoro = 0;
+			return;
+		}
+
+		if (_siirtoVuoro == 0)
+		{
+			_lauta[7][6] = _lauta[7][4];
+			_lauta[7][5] = _lauta[7][7];
+			_lauta[7][4] = nullptr;
+			_lauta[7][7] = nullptr;
+			if (_siirtoVuoro == 0) _siirtoVuoro = 1;
+			else _siirtoVuoro = 0;
+			return;
+		}
+	}
+
+	if (siirto->onkoPitkaLinna() == true)
+	{
+		if (_siirtoVuoro == 1)
+		{
+			_lauta[0][2] = _lauta[0][4];
+			_lauta[0][3] = _lauta[0][0];
+			_lauta[0][4] = nullptr;
+			_lauta[0][0] = nullptr;
+			if (_siirtoVuoro = 0) _siirtoVuoro = 1;
+			else _siirtoVuoro = 0;
+			return;
+		}
+
+		if (_siirtoVuoro == 0)
+		{
+			_lauta[7][6] = _lauta[7][4];
+			_lauta[7][5] = _lauta[7][7];
+			_lauta[7][4] = nullptr;
+			_lauta[7][7] = nullptr;
+			if (_siirtoVuoro = 0) _siirtoVuoro = 1;
+			else _siirtoVuoro = 0;
+			return;
+		}
+	}
+	// Siirretäänkö Valkoista tornia ensimmäisen kerran
+	if (_lauta[siirto->getAlkuruutu().getRivi()][siirto->getAlkuruutu().getSarake()]->getKoodi() == VT)
+	{
+		if (siirto->getAlkuruutu().getSarake() == 0 && _onkoValkeaKTliikkunut == false)
+		{
+			_onkoValkeaKTliikkunut = true;
+		}
+
+		if (siirto->getAlkuruutu().getSarake() == 7 && _onkoValkeaDTliikkunut == false)
+		{
+			_onkoValkeaDTliikkunut = true;
+		}
+
+	}
+	// Siirretäänkö Mustaa tornia ensimmäisen kerran
+	if (_lauta[siirto->getAlkuruutu().getRivi()][siirto->getAlkuruutu().getSarake()]->getKoodi() == MT)
+	{
+		if (siirto->getAlkuruutu().getSarake() == 0 && _onkoMustaKTliikkunut == false)
+		{
+			_onkoMustaKTliikkunut = true;
+		}
+
+		if (siirto->getAlkuruutu().getSarake() == 7 && _onkoMustaDTliikkunut == false)
+		{
+			_onkoMustaDTliikkunut = true;
+		}
+
+	}
+	// Siirretäänkö mustaa kuningasta ensimmäisen kerran
+	if (_lauta[siirto->getAlkuruutu().getRivi()][siirto->getAlkuruutu().getSarake()]->getKoodi() == MK && _onkoMustaKuningasLiikkunut == false)
+	{
+		_onkoMustaKuningasLiikkunut = true;
+	}
+
+	// Siirretäänkö valkoista kuningasta ensimmäisen kerran
+	if (_lauta[siirto->getAlkuruutu().getRivi()][siirto->getAlkuruutu().getSarake()]->getKoodi() == VK && _onkoMustaKuningasLiikkunut == false)
+	{
+		_onkoMustaKuningasLiikkunut = true;
+	}
 
 
+	if (siirto->onkoLyhytLinna() == false && siirto->onkoPitkaLinna() == false)
+	{
+		Nappula* tempNappula = _lauta[siirto->getAlkuruutu().getRivi()][siirto->getAlkuruutu().getSarake()];
+		_lauta[siirto->getAlkuruutu().getRivi()][siirto->getAlkuruutu().getSarake()] = nullptr;
+		_lauta[siirto->getLoppuruutu().getRivi()][siirto->getLoppuruutu().getSarake()] = tempNappula;
+	}
 
+	if (_siirtoVuoro == 0) _siirtoVuoro = 1;
+	else _siirtoVuoro = 0;
+	return;
+}
+
+
+bool Asema::getOnkoValkeaKuningasLiikkunut()
+{
+	return _onkoValkeaKuningasLiikkunut;
+}
+
+bool Asema::getOnkoMustaKuningasLiikunut()
+{
+	return _onkoMustaKuningasLiikkunut;
+}
+
+bool Asema::getOnkoValkeaDTliikkunut()
+{
+	return _onkoValkeaDTliikkunut;
+}
+
+bool Asema::getOnkoValkeaKTliikkunut()
+{
+	return _onkoValkeaKTliikkunut;
+}
+
+bool Asema::getOnkoMustaDTliikkunut()
+{
+	return _onkoMustaDTliikkunut;
+}
+
+bool Asema::getOnkoMustaKTliikkunut()
+{
+	return _onkoMustaKTliikkunut;
+}
+
+int Asema::getSiirtovuoro()
+{
+	return _siirtoVuoro;
+}
+
+void Asema::setSiirtovuoro(int vari)
+{
+	_siirtoVuoro = vari;
 }

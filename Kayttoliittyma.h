@@ -2,6 +2,8 @@
 #include"stdafx.h"
 #include <string>
 #include "Asema.h"
+#include "Siirto.h"
+#include "Ruutu.h"
 #include<iostream>
 #include<io.h>
 #include <windows.h>
@@ -17,4 +19,6 @@ public:
 		_asema = asema;
 	}
 	void piirraLauta();
+	Siirto* annaVastustajanSiirto();
+ 
 };
