@@ -1,12 +1,12 @@
 #pragma once
 #include"stdafx.h"
 #include <string>
-#include "Asema.h"
 #include "Siirto.h"
 #include "Ruutu.h"
-#include<iostream>
-#include<io.h>
+#include <iostream>
+#include <io.h>
 #include <windows.h>
+#include"Nappula.h"
 using namespace std;
 
 
@@ -20,5 +20,5 @@ public:
 	}
 	void piirraLauta();
 	Siirto* annaVastustajanSiirto();
- 
+
 };

@@ -2,11 +2,11 @@
 
 #include"stdafx.h"
 #include <string>
-#include "Nappula.h" 
 #include "Siirto.h"
+#include <list>    
 using namespace std;
 
-
+class Nappula;
 
 class Asema
 {
@@ -22,6 +22,8 @@ public:
 	bool getOnkoValkeaKTliikkunut();
 	bool getOnkoMustaDTliikkunut();
 	bool getOnkoMustaKTliikkunut();
+	void annaLaillisetSiirrot(std::list<Siirto>& lista);
+	void printLaillisetSiirrot(std::list<Siirto>& lista);
 
 private:
 	// Siirtovuoro 1 = musta, 0 = valkoinen
