@@ -18,3 +18,11 @@ int Ruutu::getSarake()
 	return _sarake;
 }
 
+bool Ruutu::operator==(Ruutu &ruutu)
+{
+	if(this->getRivi() == ruutu.getRivi() && this->getSarake() == ruutu.getSarake())
+	{
+		return true;
+	}
+	else return false;
+}

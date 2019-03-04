@@ -19,6 +19,6 @@ public:
 		_asema = asema;
 	}
 	void piirraLauta();
-	Siirto* annaVastustajanSiirto();
+	Siirto* annaSiirto();
 
 };

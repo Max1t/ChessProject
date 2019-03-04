@@ -2,7 +2,6 @@
 #include"stdafx.h"
 #include"Kayttoliittyma.h"
 
-
 void Kayttoliittyma::piirraLauta() {
 
 	CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
@@ -54,7 +53,7 @@ void Kayttoliittyma::piirraLauta() {
 }
 
 
-Siirto* Kayttoliittyma::annaVastustajanSiirto()
+Siirto* Kayttoliittyma::annaSiirto()
 {
 	std::wstring syotto;
 
@@ -69,7 +68,6 @@ Siirto* Kayttoliittyma::annaVastustajanSiirto()
 		wcout << "Esim \"Rg1-f3\", lyhyt linna = \"0-0\" pitkä linna = \"0-0-0\"" << endl;
 		wcin >> syotto;
 
-	
 
 		if (syotto == std::wstring(L"0-0"))
 		{
@@ -151,4 +149,3 @@ Siirto* Kayttoliittyma::annaVastustajanSiirto()
 	}
 
 }
-

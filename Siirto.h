@@ -1,10 +1,11 @@
 #pragma once
 #include "Ruutu.h"
-
+#include <string>
+#include <iostream>
+using namespace std;
 
 class Siirto
 {
-
 public:
 	Siirto() {}
 	Siirto(Ruutu, Ruutu);
@@ -13,6 +14,8 @@ public:
 	Ruutu getLoppuruutu();
 	bool onkoLyhytLinna();
 	bool onkoPitkaLinna();
+	void printSiirto();
+
 
 private:
 	Ruutu _alkuruutu;

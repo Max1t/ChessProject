@@ -9,6 +9,7 @@ public:
 	Ruutu(){}
 	int getRivi();
 	int getSarake();
+	bool operator == (Ruutu &ruutu);
 
 private:
 	int _sarake;

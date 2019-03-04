@@ -5,6 +5,7 @@
 #include "Asema.h"
 #include "Ruutu.h"
 #include "Siirto.h"
+#include "Ohestalyönti.h"
 
 
 // Vakioarvot nappulatyypeille.
@@ -32,7 +33,6 @@ public:
 		setVari(vari);
 	}
 	Nappula() {}
-
 
 	virtual void annaSiirrot(
 		std::list<Siirto>& lista,
@@ -245,6 +245,8 @@ public:
 
 };
 
+
+
 class Sotilas : virtual public Nappula
 {
 public:
@@ -254,41 +256,407 @@ public:
 		// Nappulan koordinaatit laudalla
 		int rivi = ruutu->getRivi();
 		int sarake = ruutu->getSarake();
+		int rivi_delta;
+		int sarake_delta;
+		Nappula* tempNappula;
 
-		int rivi_delta = rivi - 1;
-		int sarake_delta = sarake;
-
-		Nappula* tempNappula = asema->_lauta[rivi_delta][sarake_delta];
-		if (tempNappula == nullptr)
+		if (asema->getSiirtovuoro() == 0)
 		{
-			lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
-		}
-
-		rivi_delta = rivi - 1;
-		sarake_delta = sarake + 1;
-		if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0))
-		{
-			tempNappula = asema->_lauta[rivi_delta][sarake_delta];
-			if (tempNappula != nullptr) {
-				if (tempNappula->getVari() != vari)
+			rivi_delta = rivi - 1;
+			sarake_delta = sarake;
+			if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0)) {
+				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+				if (tempNappula == nullptr)
 				{
 					lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
 				}
 			}
+			if (asema->getSiirtovuoro() == 0 && rivi == 6)
+			{
+				rivi_delta = rivi - 2;
+				sarake_delta = sarake;
+				if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0)) {
+					tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+					if (tempNappula == nullptr)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+			}
+			rivi_delta = rivi - 1;
+			sarake_delta = sarake + 1;
+			if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0))
+			{
+				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+				if (tempNappula != nullptr) {
+					if (tempNappula->getVari() != vari)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
+				{
+					if (
+						rivi_delta == asema->_ohestalyönti.getLyöntiRivi() &&
+						sarake_delta == asema->_ohestalyönti.getLyöntiSarake()
+						)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+			}
+
+			rivi_delta = rivi - 1;
+			sarake_delta = sarake - 1;
+
+			if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0))
+			{
+				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+				if (tempNappula != nullptr) {
+					if (tempNappula->getVari() != vari)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
+				{
+					if (
+						rivi_delta == asema->_ohestalyönti.getLyöntiRivi() &&
+						sarake_delta == asema->_ohestalyönti.getLyöntiSarake()
+						)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+			}
 		}
 
-		rivi_delta = rivi - 1;
-		sarake_delta = sarake - 1;
-
-		if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0))
+		if (asema->getSiirtovuoro() == 1)
 		{
-			tempNappula = asema->_lauta[rivi_delta][sarake_delta];
-			if (tempNappula != nullptr) {
-				if (tempNappula->getVari() != vari)
+			rivi_delta = rivi + 1;
+			sarake_delta = sarake;
+			if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0)) {
+				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+				if (tempNappula == nullptr)
 				{
 					lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
 				}
 			}
+			if (asema->getSiirtovuoro() == 1 && rivi == 1)
+			{
+				rivi_delta = rivi + 2;
+				sarake_delta = sarake;
+				if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0)) {
+					tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+					if (tempNappula == nullptr)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+			}
+
+			rivi_delta = rivi + 1;
+			sarake_delta = sarake + 1;
+			if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0))
+			{
+				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+				if (tempNappula != nullptr) {
+					if (tempNappula->getVari() != vari)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
+				{
+					if (
+						rivi_delta == asema->_ohestalyönti.getLyöntiRivi() &&
+						sarake_delta == asema->_ohestalyönti.getLyöntiSarake()
+						)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+			}
+
+			rivi_delta = rivi + 1;
+			sarake_delta = sarake - 1;
+
+			if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0))
+			{
+				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
+				if (tempNappula != nullptr) {
+					if (tempNappula->getVari() != vari)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
+				{
+					if (
+						rivi_delta == asema->_ohestalyönti.getLyöntiRivi() &&
+						sarake_delta == asema->_ohestalyönti.getLyöntiSarake()
+						)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					}
+				}
+			}
+
 		}
+
+	}
+};
+
+class Lähetti : virtual public Nappula
+{
+public:
+	Lähetti(std::wstring unicode, int koodi, int vari) : Nappula(unicode, koodi, vari) {}
+	virtual void annaSiirrot(
+		std::list<Siirto>& lista,
+		Ruutu* ruutu,
+		Asema* asema,
+		int vari
+	)
+	{
+		// Nykyiset koordinaatit
+		int y = ruutu->getSarake();
+		int x = ruutu->getRivi();
+
+		// "oikealle ylös"
+		for (int dx = 1; dx <= 7; dx++)
+		{
+			// uudet koordinatit
+			int new_x = x - dx;
+			int new_y = y + dx;
+			// mennäänkö yli laudan reunasta?
+			if (new_x < 0 || new_y > 7) break;
+			// mitä tutkittavassa ruudussa on?
+			Nappula* n = asema->_lauta[new_x][new_y];
+			// onko tyhjä ruutu?
+			if (n == nullptr)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+				continue;
+			}
+			// onko vastustajan nappula?
+			if (n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+			break;
+		}
+
+		// vasemmalle ylös
+		for (int dx = 1; dx <= 7; dx++)
+		{
+			// uudet koordinatit
+			int new_x = x - dx;
+			int new_y = y - dx;
+
+			if (new_x < 0 || new_y < 0) break;
+
+			// mitä tutkittavassa ruudussa on?
+			Nappula* n = asema->_lauta[new_x][new_y];
+			// onko tyhjä ruutu?
+			if (n == nullptr)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+				continue;
+			}
+			// onko vastustajan nappula?
+			if (n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+			break;
+		}
+
+		// vasemmalle alas
+		for (int dx = 1; dx <= 7; dx++)
+		{
+			// uudet koordinatit
+			int new_x = x + dx;
+			int new_y = y - dx;
+
+			// mennäänkö yli laudan reunasta?
+			if (new_x > 7 || new_y < 0) break;
+
+			// mitä tutkittavassa ruudussa on?
+			Nappula* n = asema->_lauta[new_x][new_y];
+			// onko tyhjä ruutu?
+			if (n == nullptr)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+				continue;
+			}
+			// onko vastustajan nappula?
+			if (n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+			break;
+		}
+
+		// oikealle alas
+		for (int dx = 1; dx <= 7; dx++)
+		{
+			// uudet koordinatit
+			int new_x = x + dx;
+			int new_y = y + dx;
+
+			// mennäänkö yli laudan reunasta?
+			if (new_x > 7 || new_y > 7) break;
+
+			// mitä tutkittavassa ruudussa on?
+			Nappula* n = asema->_lauta[new_x][new_y];
+			// onko tyhjä ruutu?
+			if (n == nullptr)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+				continue;
+			}
+			// onko vastustajan nappula?
+			if (n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+			break;
+		}
+	}
+};
+
+class Kuningatar : public virtual Torni, public virtual Lähetti {
+public:
+	Kuningatar(std::wstring unicode, int koodi, int vari) : Nappula(unicode, koodi, vari), Lähetti(unicode, koodi, vari), Torni(unicode, koodi, vari) {}
+	virtual void annaSiirrot(
+		std::list<Siirto>& lista,
+		Ruutu* ruutu,
+		Asema* asema,
+		int vari
+	)
+	{
+		Torni::annaSiirrot(lista, ruutu, asema, vari);
+		Lähetti::annaSiirrot(lista, ruutu, asema, vari);
+	}
+};
+
+class Kuningas : virtual public Nappula
+{
+public:
+	Kuningas(std::wstring unicode, int koodi, int vari) : Nappula(unicode, koodi, vari) {}
+	virtual void annaSiirrot(
+		std::list<Siirto>& lista,
+		Ruutu* ruutu,
+		Asema* asema,
+		int vari
+	)
+	{
+
+		// Nykyiset koordinaatit
+		int y = ruutu->getSarake();
+		int x = ruutu->getRivi();
+
+		// "oikealle" 
+		int new_x = x + 1;
+		int new_y = y;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+		}
+
+
+
+		// oik alas
+		new_x = x + 1;
+		new_y = y + 1;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+		}
+
+
+		// alas
+		new_x = x;
+		new_y = y + 1;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+
+		}
+		// vas alas
+		new_x = x - 1;
+		new_y = y + 1;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+
+		}
+
+		// vasemmalle
+		new_x = x - 1;
+		new_y = y;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+		}
+
+		// vas ylös
+		new_x = x - 1;
+		new_y = y - 1;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+		}
+
+		// ylös
+		new_x = x;
+		new_y = y - 1;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+
+			
+		}
+
+		// oik ylös
+		new_x = x + 1;
+		new_y = y - 1;
+		if (!(new_x > 7 || new_x < 0 || new_y > 7 || new_y < 0))
+		{
+			Nappula* n = asema->_lauta[new_x][new_y];
+			if (n == nullptr || n->getVari() != vari)
+			{
+				lista.push_back(Siirto(Ruutu(x, y), Ruutu(new_x, new_y)));
+			}
+		}
+
 	}
 };
