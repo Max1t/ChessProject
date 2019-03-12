@@ -64,10 +64,10 @@ Siirto* Kayttoliittyma::annaSiirto()
 	int loppuRivi;
 	while (true) {
 		wcout << "Siirtovuoro: " << _asema->getSiirtovuoro() << endl;
-		wcout << "Anna siirto muodossa nappulankirjain,alkuruutu,loppuruutu" << endl;
+		wcout << "Anna siirto muodossa nappulankirjain,alkuruutu,loppuruutu, jos sotilas korotetaan" << endl;
+		wcout << "lisää loppuun numero, 1 = kuningatar, 2 = ratsu, 3 = lähetti, 4 = torni" << endl;
 		wcout << "Esim \"Rg1-f3\", lyhyt linna = \"0-0\" pitkä linna = \"0-0-0\"" << endl;
 		wcin >> syotto;
-
 
 		if (syotto == std::wstring(L"0-0"))
 		{
@@ -78,11 +78,17 @@ Siirto* Kayttoliittyma::annaSiirto()
 			return new Siirto(false, true);
 		}
 
-		std::wstring Nappula = syotto.substr(0, 1);
-		std::wstring Alkuruutusarake = syotto.substr(1, 1);
-		std::wstring Alkuruuturivi = syotto.substr(2, 1);
-		std::wstring Loppuruutusarake = syotto.substr(4, 1);
-		std::wstring Loppuruuturivi = syotto.substr(5, 1);
+		if (syotto.length() < 5  || syotto.length() > 6) {
+			wcout << "Siirto annettu väärässä muodossa. Yritä uudelleen" << endl;
+			continue;
+		}
+
+
+		std::wstring Alkuruutusarake = syotto.substr(0, 1);
+		std::wstring Alkuruuturivi = syotto.substr(1, 1);
+		std::wstring Loppuruutusarake = syotto.substr(3, 1);
+		std::wstring Loppuruuturivi = syotto.substr(4, 1);
+		std::wstring korotus = syotto.substr(5, 1);
 
 		if (Alkuruutusarake == std::wstring(L"a")) alkuSarake = 0;
 		else if (Alkuruutusarake == std::wstring(L"b")) alkuSarake = 1;
@@ -140,12 +146,50 @@ Siirto* Kayttoliittyma::annaSiirto()
 			continue;
 		}
 
+
+
 		Ruutu AlkuRuutu = Ruutu(alkuRivi, alkuSarake);
 		Ruutu LoppuRuutu = Ruutu(loppuRivi, loppuSarake);
 
-		Siirto* VastustajanSiirto = new Siirto(AlkuRuutu, LoppuRuutu);
+		if (syotto.length() == 6) {
+			if (korotus == std::wstring(L"1"))
+			{
+				Siirto* VastustajanSiirto = new Siirto(AlkuRuutu, LoppuRuutu, 1);
+				return VastustajanSiirto;
+			}
+			else if (korotus == std::wstring(L"2"))
+			{
+				Siirto* VastustajanSiirto = new Siirto(AlkuRuutu, LoppuRuutu, 2);
+				return VastustajanSiirto;
+			}
+			else if (korotus == std::wstring(L"3"))
+			{
+				Siirto* VastustajanSiirto = new Siirto(AlkuRuutu, LoppuRuutu, 3);
+				return VastustajanSiirto;
+			}
+			else if (korotus == std::wstring(L"4"))
+			{
+				Siirto* VastustajanSiirto = new Siirto(AlkuRuutu, LoppuRuutu, 4);
+				return VastustajanSiirto;
+			}
+			else
+			{
+				wcout << "Siirto annettu väärässä muodossa. Yritä uudelleen" << endl;
+				continue;
+			}
+		}
 
+		Siirto* VastustajanSiirto = new Siirto(AlkuRuutu, LoppuRuutu);
 		return VastustajanSiirto;
 	}
 
+}
+
+bool Kayttoliittyma::onkoListassa(Siirto siirto, std::list<Siirto>& lista)
+{
+	for (auto _siirto : lista)
+	{
+		if (_siirto == siirto) return true;
+	}
+	return false;
 }

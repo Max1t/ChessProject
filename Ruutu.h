@@ -12,8 +12,8 @@ public:
 	bool operator == (Ruutu &ruutu);
 
 private:
-	int _sarake;
-	int _rivi;
+	int _sarake = 0;
+	int _rivi = 0;
 
 };
 

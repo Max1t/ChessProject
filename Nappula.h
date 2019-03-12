@@ -268,7 +268,14 @@ public:
 				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
 				if (tempNappula == nullptr)
 				{
-					lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					if(rivi_delta == 0) 
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 1));
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 2));
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 3));
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 4));
+					}
+					else { lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta))); }
 				}
 			}
 			if (asema->getSiirtovuoro() == 0 && rivi == 6)
@@ -277,7 +284,7 @@ public:
 				sarake_delta = sarake;
 				if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0)) {
 					tempNappula = asema->_lauta[rivi_delta][sarake_delta];
-					if (tempNappula == nullptr)
+					if (tempNappula == nullptr && asema->_lauta[rivi_delta + 1][sarake_delta] == nullptr)
 					{
 						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
 					}
@@ -291,7 +298,14 @@ public:
 				if (tempNappula != nullptr) {
 					if (tempNappula->getVari() != vari)
 					{
-						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+						if (rivi_delta == 0)
+						{
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 1));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 2));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 3));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 4));
+						}
+						else { lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta))); }
 					}
 				}
 				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
@@ -315,7 +329,14 @@ public:
 				if (tempNappula != nullptr) {
 					if (tempNappula->getVari() != vari)
 					{
-						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+						if (rivi_delta == 0)
+						{
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 1));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 2));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 3));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 4));
+						}
+						else { lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta))); }
 					}
 				}
 				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
@@ -339,7 +360,14 @@ public:
 				tempNappula = asema->_lauta[rivi_delta][sarake_delta];
 				if (tempNappula == nullptr)
 				{
-					lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+					if (rivi_delta == 7)
+					{
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 1));
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 2));
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 3));
+						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 4));
+					}
+					else { lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta))); }
 				}
 			}
 			if (asema->getSiirtovuoro() == 1 && rivi == 1)
@@ -348,7 +376,7 @@ public:
 				sarake_delta = sarake;
 				if (!(rivi_delta > 7 || rivi_delta < 0 || sarake_delta > 7 || sarake_delta < 0)) {
 					tempNappula = asema->_lauta[rivi_delta][sarake_delta];
-					if (tempNappula == nullptr)
+					if (tempNappula == nullptr && asema->_lauta[rivi_delta -1][sarake_delta] == nullptr)
 					{
 						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
 					}
@@ -363,7 +391,14 @@ public:
 				if (tempNappula != nullptr) {
 					if (tempNappula->getVari() != vari)
 					{
-						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+						if (rivi_delta == 7)
+						{
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 1));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 2));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 3));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 4));
+						}
+						else { lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta))); }
 					}
 				}
 				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)
@@ -387,7 +422,14 @@ public:
 				if (tempNappula != nullptr) {
 					if (tempNappula->getVari() != vari)
 					{
-						lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta)));
+						if (rivi_delta == 7)
+						{
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 1));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 2));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 3));
+							lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta), 4));
+						}
+						else { lista.push_back(Siirto(Ruutu(rivi, sarake), Ruutu(rivi_delta, sarake_delta))); }
 					}
 				}
 				if (asema->_ohestalyönti.onkoOhestaMahdollinen() == true)

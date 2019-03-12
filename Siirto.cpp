@@ -10,6 +10,15 @@ Siirto::Siirto(Ruutu alku, Ruutu loppu)
 	_loppuRuutu = loppu;
 }
 
+Siirto::Siirto(Ruutu alku, Ruutu loppu, int korotus)
+{
+	_alkuruutu = alku;
+	_loppuRuutu = loppu;
+	_miksiKorotetaan = korotus;
+}
+
+
+
 Siirto::Siirto(bool lyhytLinna, bool pitkaLinna)
 {
 	_lyhytLinna = lyhytLinna;
@@ -26,6 +35,11 @@ Ruutu Siirto::getLoppuruutu()
 	return _loppuRuutu;
 }
 
+int Siirto::getMiksiKorotetaan()
+{
+	return _miksiKorotetaan;
+}
+
 bool Siirto::onkoLyhytLinna()
 {
 	return _lyhytLinna;
@@ -34,6 +48,21 @@ bool Siirto::onkoLyhytLinna()
 bool Siirto::onkoPitkaLinna()
 {
 	return _pitkaLinna;
+}
+
+bool Siirto::operator==(Siirto &siirto)
+{
+	if (
+		this->_alkuruutu == siirto._alkuruutu &&
+		this->_loppuRuutu == siirto._loppuRuutu &&
+		this->_lyhytLinna == siirto._lyhytLinna &&
+		this->_pitkaLinna == siirto._pitkaLinna &&
+		this->_miksiKorotetaan == siirto._miksiKorotetaan
+		)
+	{
+		return true;
+	}
+	else return false;
 }
 
 
@@ -89,6 +118,14 @@ void Siirto::printSiirto()
 	if (getLoppuruutu().getRivi() == 5) toPrint.append(L"3");
 	if (getLoppuruutu().getRivi() == 6) toPrint.append(L"2");
 	if (getLoppuruutu().getRivi() == 7) toPrint.append(L"1");
+
+	if (getMiksiKorotetaan() != 0)
+	{
+		if (getMiksiKorotetaan() == 1) toPrint.append(L" Korotus kuningattareksi");
+		if (getMiksiKorotetaan() == 2) toPrint.append(L" Korotus ratsuksi");
+		if (getMiksiKorotetaan() == 3) toPrint.append(L" Korotus lähetiksi");
+		if (getMiksiKorotetaan() == 4) toPrint.append(L" Korotus torniksi");
+	}
 
 	wcout << toPrint << endl;
 }

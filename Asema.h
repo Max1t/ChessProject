@@ -6,6 +6,8 @@
 #include "Ohestalyönti.h"
 #include <list>   
 #include "MinMax.h"
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -17,13 +19,16 @@ class Asema
 public:
 	Asema();
 	Asema(const Asema &obj);
-
+	void addCurrentToUndo();
+	void Undo();
 	double evaluoi();
 	double laskeNappuloidenArvo(int vari);
 	double laskeLinjaArvo(int vari);
-	double laskeSiirrotArvo(int vari);
+	double laskeKeskeisyysArvo(int vari);
+	double laskeLiikkuvuusaArvo(int vari);
 	double lopputulos();
 	MinMax minmax(int syvyys);
+	MinMax alphabeta(int syvyys, bool maximizingPlayer, double alpha, double beta);
 	static Nappula *vk, *vd, *vt, *vl, *vr, *vs;	// Valkeat nappulat.
 	static Nappula *mk, *md, *mt, *ml, *mr, *ms;	// Mustat nappulat.
 
@@ -46,7 +51,7 @@ public:
 	bool onkoRuutuUhattuLista(Ruutu ruutu, std::list<Siirto>& siirrot);
 	bool onkoRuutuUhattuVari(Ruutu* ruutu, int vari);
 	bool onkoRuutuUhattuVariINT(int rivi, int sarake, int vastustajanVari);
-
+	void setTekoAlyVari(int vari);
 private:
 	// Siirtovuoro 1 = musta, 0 = valkoinen
 	int _siirtoVuoro = 0;
@@ -56,4 +61,6 @@ private:
 	bool _onkoValkeaKTliikkunut = false;
 	bool _onkoMustaDTliikkunut = false;
 	bool _onkoMustaKTliikkunut = false;
+	int _tekoAlyVari;
+	Asema* _undoAsema;
 };

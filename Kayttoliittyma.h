@@ -20,5 +20,6 @@ public:
 	}
 	void piirraLauta();
 	Siirto* annaSiirto();
+	bool onkoListassa(Siirto siirto, std::list<Siirto>& lista);
 
 };
