@@ -19,15 +19,17 @@ class Asema
 public:
 	Asema();
 	Asema(const Asema &obj);
+
 	void addCurrentToUndo();
 	void Undo();
 	double evaluoi();
 	double laskeNappuloidenArvo(int vari);
 	double laskeLinjaArvo(int vari);
-	double laskeKeskeisyysArvo(int vari);
-	double laskeLiikkuvuusaArvo(int vari);
+	double laskeRatsuLiikkuvuusArvo(int vari);
+	double lahettiPari(int vari);
 	double lopputulos();
 	MinMax minmax(int syvyys);
+	//MinMax alphabeta(int syvyys, double alpha, double beta);
 	MinMax alphabeta(int syvyys, bool maximizingPlayer, double alpha, double beta);
 	static Nappula *vk, *vd, *vt, *vl, *vr, *vs;	// Valkeat nappulat.
 	static Nappula *mk, *md, *mt, *ml, *mr, *ms;	// Mustat nappulat.
@@ -44,7 +46,6 @@ public:
 	bool getOnkoMustaDTliikkunut();
 	bool getOnkoMustaKTliikkunut();
 	void annaLaillisetSiirrot(std::list<Siirto>& lista);
-	void annaVihollisenLaillisetSiirrot(std::list<Siirto>& lista);
 	void annaRaakaSiirrot(std::list<Siirto>& lista);
 	void printLaillisetSiirrot(std::list<Siirto>& lista);
 	Ruutu etsiKuningas(int vari); // valkea = 0, musta = 1
